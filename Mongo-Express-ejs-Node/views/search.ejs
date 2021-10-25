@@ -1,0 +1,45 @@
+<html>
+    <body>
+        <h1>Student Info</h1>
+        <a href="/AddStudent">
+        <button>
+            Add
+        </button>
+        </a>
+        <br>
+        <br>
+        <table border="1">
+            <tr>
+                <th>rno</th>
+                <th>name</th>
+                <th>standard</th>
+                <th>address</th>
+                <th>phone</th>
+                <th>Image</th>
+                <th>edit</th>
+                <th>delete</th>
+            </tr>
+            <% for(var i=0;i<stdData.length;i++){ %>
+                <tr>
+                    <td><%= stdData[i].rno %></td>
+                    <td><%= stdData[i].name %></td>
+                    <td><%= stdData[i].std %></td>
+                    <td><%= stdData[i].address %></td>
+                    <td><%= stdData[i].phone %></td>
+                    <td><img src="data:image/<%=stdData[i].img.contentType%>;base64,
+                        <%=stdData[i].img.data.toString('base64')%>" height="50" width="50"></td>
+                    <td><a href="/UpdateStudent?id=<%= stdData[i]._id %>">Update</a></td>
+                    <td><a href="/DeleteStudent?id=<%= stdData[i]._id %>">Delete</a></td>
+                </tr>
+            <% }%>
+        </table>
+        <form method="POST" action="/search">
+            <input type="text" name="search">
+            <input type="submit" value="search">
+        </form>
+    </body>
+</html>
+
+
+
+

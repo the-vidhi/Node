@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <form method="POST" action="<%= type %>" enctype="multipart/form-data">
+            roll no <input type="number" name="rno" value="<% if(typeof rno != 'undefined'){ %><%= rno %><% }%>"><br>
+            name <input type="text" name="name" value="<% if(typeof name != 'undefined') { %><%= name%><% } %>"><br>
+            address <textarea name="address"><% if(typeof address != 'undefined'){ %><%= address%><% } %></textarea><br>
+            standard <input type="number" name="std" value="<% if(typeof std != 'undefined'){%><%= std %><%} %>"><br>
+            phone number <input type="number" name="phno" value="<% if(typeof phno != 'undefined'){%><%= phno %><%} %>"><br>
+            image<input type="file" name="image" id="image" value=""><br>
+            <input type="hidden" name="id" value="<% if(typeof id != 'undefined'){%><%= id%><% } %>"><br>
+            <button type="submit">Save</button>
+        </form>
+    </body>
+</html>
+
