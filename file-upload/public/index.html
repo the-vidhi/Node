@@ -1,0 +1,20 @@
+<html>
+   <head>
+      <title>File Uploading Form</title>
+   </head>
+
+   <body>
+      <h3>File Upload:</h3>
+      Select a file to upload: <br />
+      
+      <form action = "/file_upload" method = "POST" 
+         enctype = "multipart/form-data">
+         First Name: <input type="text" name="fname" size="50" /><br>
+         Last Name: <input type="text" name="lname" size="50" /><br>
+         <input type="file" name="myfile" size="50" />
+         <br />
+         <input type = "submit" value = "Upload File" />
+      </form>
+     
+   </body>
+</html>
