@@ -1,0 +1,49 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df=pd.read_csv("Mall_Customers.csv")
+df.head()
+
+X=df.iloc[:, [3,4]].values
+X
+
+plt.scatter(X[:,0],X[:,1], color='black', label='data points')
+plt.xlabel('Income')
+plt.ylabel('Spending')
+plt.legend()
+plt.show()
+
+from sklearn.cluster import KMeans
+wcss=[]
+for i in range(1,11):
+  km=KMeans(n_clusters=i)
+  km.fit(X)
+  wcss.append(km.inertia_)
+
+print (wcss)
+
+plt.figure(figsize=(12,6))
+plt.plot(range(1,11), wcss)
+plt.plot(range(1,11),wcss, linewidth=2, color='red', marker='8')
+plt.xlabel('K values')
+plt.xticks(np.arange(1,11))
+plt.ylabel('wcss values')
+plt.show()
+
+df1=df[["Annual Income (k$)",	"Spending Score (1-100)"]]
+X=df1
+X.head()
+
+km1=KMeans(n_clusters=5)
+km1.fit(X)
+y=km1.predict(X)
+df1["label"]=y
+df1
+
+import seaborn as sns
+plt.figure(figsize=(12,6))
+sns.scatterplot(x='Annual Income (k$)', y='Spending Score (1-100)',hue="label",palette=['green','orange','brown','dodgerblue','red'], data=X, s=50)
+plt.xlabel('Annual Income')
+plt.ylabel('Spending score')
+plt.show()
