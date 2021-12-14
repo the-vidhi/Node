@@ -1,0 +1,41 @@
+#include<Wire.h>
+int i2cdata;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  Wire.begin(0x8);
+  Wire.onRequest(sendData); 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  i2cdata = analogRead(A0);//Reads the Value of LDR(light).
+
+}
+void sendData() {   
+    Wire.write(i2cdata);  
+  }
+
+from smbus import SMBus
+import sqlite3
+import time
+addr = 0x8 # bus address
+bus = SMBus(1) # indicates /dev/ic2-1
+ 
+y = bus.read_byte_data(addr, 0x1)
+DD=y
+print(y)
+connection = sqlite3.connect("i2cSQL.db")
+
+crsr = connection.cursor()
+sql_createtbl = """create table if not exists DATA5(light VARCHAR(50));"""
+crsr.execute(sql_createtbl)
+crsr.execute("INSERT INTO DATA5(light) VALUES(?)",(DD))
+
+#crsr.execute("INSERT INTO DATA2(light) VALUES(?)",(2))
+time.sleep(2)   
+crsr.execute("select * from DATA5")
+ans = crsr.fetchall()
+
+print(ans)
