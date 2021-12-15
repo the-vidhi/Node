@@ -1,0 +1,46 @@
+import numpy as np
+import pandas as pd
+
+df=pd.read_csv("file.csv")
+df
+
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+ds=df.apply(le.fit_transform)
+ds
+
+feature=ds[["Days","Season"]].values
+
+from sklearn.naive_bayes import GaussionNB
+model=GaussionNB()
+model.fit(feature,target)
+
+test_var=[[3,3]]
+
+model.predict(test_var)
+
+##########
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3)
+
+from sklearn.naive_bayes import GaussionNB
+model = GaussionNB()
+model.fit(X_train, Y_train)
+
+Y_pred = model.predict(X_test)
+
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(Y_test, Y_pred)
+
+for i in range(30):
+	print(i, Y_test[i], Y_pred[i])
+
+from sklearn.metrics import accuracy_score
+acc = accuracy_score(Y_test, Y_pred)*100
+
+
+
+from sklearn.neighbours import KNighboursClassifier
+model = KNighboursClassifier()
+model.fit(X_train, Y_train)
