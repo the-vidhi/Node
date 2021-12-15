@@ -1,58 +1,20 @@
-#include <SPI.h>
-
-int ldr;
-byte c = 0, b=0;
-volatile byte pos;
-volatile boolean processing;
-byte i;
-
-void setup (void)
-{
-  Serial.begin (115200);
-  pinMode(MISO, OUTPUT);
-  pinMode(MOSI, INPUT);
-  SPCR |= _BV(SPE);
-  pos = 0;
-  processing = false;
-  SPI.attachInterrupt();
-}
+cond split 
+up - !ISNULL([ID (1)]) && !ISNULL(ID)
+ins - ISNULL([ID (1)]) && !ISNULL(ID)
+del - !ISNULL([ID (1)]) && ISNULL(ID)
 
 
-void loop (void)
-{
-  ldr = analogRead(A0);
-  SPDR=ldr;
- 
-}
+cond split = update
+(Name != [Name (1)]) || (Address != [Address (1)]) || (City != [City (1)]) || (State != [State (1)]) || (Country != [Country (1)])
 
-import spidev
-import sqlite3
-import datetime
-import time
+update
+update FinalTB
+set Name = ?,
+Address = ?
+where ID = ?
 
-connection = sqlite3.connect("spi.db")
+delete from FinalTB
+ where ID = ?
 
-crsr = connection.cursor()
-sql_createtbl = """create table if not exists spidata(light VARCHAR(50),datetime DATE);"""
-crsr.execute(sql_createtbl)
 
-spi=spidev.SpiDev(0,0)
-spi.open(0,0)
-#msg= 0xAA
-spi.max_speed_hz = 115200
-#while 1:
- #   spi.writebytes([0x4,0x06])
-    #resp=spi.xfer2(0xAA)
-while(1):
-    y = spi.readbytes(1)
-    print (y)
-    
-    crsr.execute("INSERT INTO spidata(light,datetime) VALUES(?,?)",(str(y),str(datetime.datetime.now())))
-
-    #crsr.execute("INSERT INTO DATA2(light) VALUES(?)",(2))
-    time.sleep(2)  
-    crsr.execute("select * from spidata")
-    ans = crsr.fetchall()
-
-    print(ans)
-    time.sleep(0.5)
+System.Windows.Forms.MessageBox.Show("Updated Records: " + Dts.Variables[0].Value.ToString());
