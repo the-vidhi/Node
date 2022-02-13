@@ -1,1 +1,48 @@
 https://www.youtube.com/watch?v=x2iUJVBb7gI
+
+const firstCapital = () =>{
+    const word = "vidhi vaghasiya bjhkrg hio"
+    let ans = ''
+
+    for(i=0; i<word.length; i++){
+        if(word[i-1] == ' '){
+            ans = ans + word[i].toUpperCase()
+        } else if(word[0]!=' ' && i==0){
+            ans = ans + word[i].toUpperCase()
+        } 
+        else { 
+            ans = ans + word[i]
+        }
+    }
+    console.log(ans);
+}
+
+const strLength = () =>{
+    let arr = ["Burger","Fries","Pasta","pasta","Panipuri","Dosa","Samosa"]
+    let arr1 = []
+    
+    for(let i=0; i<arr.length; i++){
+        for(let j=i+1; j<arr.length; j++){
+            if(arr[i].length == arr[j].length){
+                arr1.push(arr[i])
+                arr1.push(arr[j])  
+            } 
+        }
+    }
+   
+    arr = arr.filter(x=> arr1.indexOf(x) < 0)
+    console.log(arr);
+}
+
+
+const recursion = (array) =>{    
+    
+    array.forEach(element => {
+        console.log(element.name);
+        if(element.children && element.children.length > 0){
+            array1.push(element.name)
+            recursion(element.children)
+        }
+    });    
+}
+recursion(array)
